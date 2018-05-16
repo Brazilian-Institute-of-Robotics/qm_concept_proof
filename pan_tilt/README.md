@@ -24,3 +24,9 @@ make
 ```sh
 ./testapp
 ```
+
+### Functions used and their descriptions
+
+Function: device_enumeration_t XIMC API enumerate devices ( int enumerate flags, const char ∗ hints )
+Description: Enumerate all devices that looks like valid.
+
