@@ -285,6 +285,8 @@ int main(int argc, char *argv[])
 
 	//----------------------------------------------------> Y Stage Take Starting Position<----------------------------------------------------//
 
+	wprintf(L"\nTilt moving to 60°\n");
+
 	if ((result = command_move_calb(yStage, 60, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
 
@@ -303,6 +305,8 @@ int main(int argc, char *argv[])
 	}
 
 	//----------------------------------------------------> X Stage Scan Horizontal Row<----------------------------------------------------//
+
+	wprintf(L"\nPan moving to -30°\n");
 
 	if ((result = command_move_calb(xStage, -30, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
@@ -331,6 +335,8 @@ int main(int argc, char *argv[])
 	if ((result = set_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
 		wprintf(L"error comman set move settings %ls\n", error_string(result));
 
+	wprintf(L"\nPan moving to 30°\n");
+
 	if ((result = command_move_calb(xStage, 30, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
 
@@ -357,6 +363,8 @@ int main(int argc, char *argv[])
 
 	if ((result = set_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
 		wprintf(L"error comman set move settings %ls\n", error_string(result));
+
+	wprintf(L"\nPan moving to -30°\n");
 
 	if ((result = command_move_calb(xStage, -30, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
@@ -377,6 +385,8 @@ int main(int argc, char *argv[])
 
 	//----------------------------------------------------> Y Stage Starting Second Scan Row<----------------------------------------------------//
 
+	wprintf(L"\nTilt moving to 45°\n");
+
 	if ((result = command_move_calb(yStage, 45, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
 
@@ -395,6 +405,8 @@ int main(int argc, char *argv[])
 	}
 
 	//----------------------------------------------------> X Stage Scan Horizontal Row<----------------------------------------------------//
+
+	wprintf(L"\nPan moving to 30°\n");
 
 	if ((result = command_move_calb(xStage, -30, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
@@ -449,6 +461,8 @@ int main(int argc, char *argv[])
 
 	if ((result = set_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
 		wprintf(L"error comman set move settings %ls\n", error_string(result));
+
+	wprintf(L"\nPan moving to 0°\n");
 
 	if ((result = command_move_calb(xStage, 0, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
@@ -480,7 +494,7 @@ int main(int argc, char *argv[])
 	if ((result = close_device(&xStage)) != result_ok)
 		wprintf(L"error closing device %ls\n", error_string(result));
 
-	wprintf(L"Done\n");
+	wprintf(L"Scan complete!\n");
 
 	return 0;
 }
