@@ -27,6 +27,30 @@ make
 
 ### Functions used and their descriptions
 
-Function: device_enumeration_t XIMC API enumerate devices ( int enumerate flags, const char ∗ hints )
-Description: Enumerate all devices that looks like valid.
+**Function:**
 
+```C
+device_enumeration_t XIMC_API enumerate_devices (int enumerate flags, const char ∗ hints)
+```
+
+**Description:** Enumerate all devices that looks like valid
+
+---
+
+**Function:**
+
+```C
+int XIMC_API get_device_count (device enumeration t device enumeration)
+```
+
+**Description:** Get device count
+
+---
+
+**Function:**
+
+```C
+pchar XIMC_API get_device_name (device enumeration t device enumeration, int device index)
+```
+
+**Description:** Get device name from the device enumeration
