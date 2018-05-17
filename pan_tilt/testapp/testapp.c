@@ -295,8 +295,8 @@ int main(int argc, char *argv[])
 
 	while (yStatus.MvCmdSts == (MVCMD_MOVE | MVCMD_RUNNING))
 	{
-		get_position_calb(yStage, &getPositionCalb, &calibration);
-		wprintf(L"yPosition: %.3f°\n", getPositionCalb.Position);
+		get_position(yStage, &getPosition);
+		wprintf(L"yPosition: %.3f°\n", getPosition.Position * calibration.A);
 
 		if ((result = get_status_calb(yStage, &yStatus, &calibration)) != result_ok)
 			wprintf(L"error getting status %ls\n", error_string(result));
@@ -316,8 +316,8 @@ int main(int argc, char *argv[])
 
 	while (xStatus.MvCmdSts == (MVCMD_MOVE | MVCMD_RUNNING))
 	{
-		get_position_calb(xStage, &getPositionCalb, &calibration);
-		wprintf(L"xPosition: %.3f°\n", getPositionCalb.Position);
+		get_position(xStage, &getPosition);
+		wprintf(L"xPosition: %.3f°\n", getPosition.Position * calibration.A);
 
 		if ((result = get_status_calb(xStage, &xStatus, &calibration)) != result_ok)
 			wprintf(L"error getting status %ls\n", error_string(result));
@@ -345,8 +345,8 @@ int main(int argc, char *argv[])
 
 	while (xStatus.MvCmdSts == (MVCMD_MOVE | MVCMD_RUNNING))
 	{
-		get_position_calb(xStage, &getPositionCalb, &calibration);
-		wprintf(L"xPosition: %.3fº\n", getPositionCalb.Position);
+		get_position(xStage, &getPosition);
+		wprintf(L"xPosition: %.3f°\n", getPosition.Position * calibration.A);
 
 		if ((result = get_status_calb(xStage, &xStatus, &calibration)) != result_ok)
 			wprintf(L"error getting status %ls\n", error_string(result));
@@ -374,8 +374,8 @@ int main(int argc, char *argv[])
 
 	while (xStatus.MvCmdSts == (MVCMD_MOVE | MVCMD_RUNNING))
 	{
-		get_position_calb(xStage, &getPositionCalb, &calibration);
-		wprintf(L"xPosition: %.3fº\n", getPositionCalb.Position);
+		get_position(xStage, &getPosition);
+		wprintf(L"xPosition: %.3f°\n", getPosition.Position * calibration.A);
 
 		if ((result = get_status_calb(xStage, &xStatus, &calibration)) != result_ok)
 			wprintf(L"error getting status %ls\n", error_string(result));
@@ -395,8 +395,8 @@ int main(int argc, char *argv[])
 
 	while (yStatus.MvCmdSts == (MVCMD_MOVE | MVCMD_RUNNING))
 	{
-		get_position_calb(yStage, &getPositionCalb, &calibration);
-		wprintf(L"yPosition: %.3f°\n", getPositionCalb.Position);
+		get_position(yStage, &getPosition);
+		wprintf(L"yPosition: %.3f°\n", getPosition.Position * calibration.A);
 
 		if ((result = get_status_calb(yStage, &yStatus, &calibration)) != result_ok)
 			wprintf(L"error getting status %ls\n", error_string(result));
@@ -424,8 +424,8 @@ int main(int argc, char *argv[])
 
 	while (xStatus.MvCmdSts == (MVCMD_MOVE | MVCMD_RUNNING))
 	{
-		get_position_calb(xStage, &getPositionCalb, &calibration);
-		wprintf(L"xPosition: %.3fº\n", getPositionCalb.Position);
+		get_position(xStage, &getPosition);
+		wprintf(L"xPosition: %.3f°\n", getPosition.Position * calibration.A);
 
 		if ((result = get_status_calb(xStage, &xStatus, &calibration)) != result_ok)
 			wprintf(L"error getting status %ls\n", error_string(result));
@@ -453,8 +453,8 @@ int main(int argc, char *argv[])
 
 	while (xStatus.MvCmdSts == (MVCMD_MOVE | MVCMD_RUNNING))
 	{
-		get_position_calb(xStage, &getPositionCalb, &calibration);
-		wprintf(L"xPosition: %.3fº\n", getPositionCalb.Position);
+		get_position(xStage, &getPosition);
+		wprintf(L"xPosition: %.3f°\n", getPosition.Position * calibration.A);
 
 		if ((result = get_status_calb(xStage, &xStatus, &calibration)) != result_ok)
 			wprintf(L"error getting status %ls\n", error_string(result));
