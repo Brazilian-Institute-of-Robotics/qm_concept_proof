@@ -196,6 +196,7 @@ int main(int argc, char *argv[])
 	//----------------------------------------------------> X&Y Stage <----------------------------------------------------//
 	home_settings_calb_t xHomeSettings, yHomeSettings;
 	status_calb_t xStatus, yStatus;
+	move_settings_calb_t xMoveSettings;
 	uint32_t visualizatonPeriod = 100;
 
 	calibration.A = 0.015; // 1 step = 0.015 degree
@@ -256,7 +257,7 @@ int main(int argc, char *argv[])
 	if ((result = get_home_settings_calb(yStage, &yHomeSettings, &calibration)) != result_ok)
 		wprintf(L"error getting home settings %ls\n\n", error_string(result));
 
-	xHomeSettings.HomeDelta = 0.555; //Difference between home position and zero mark at the stage
+	yHomeSettings.HomeDelta = -0.555; //Difference between home position and zero mark at the stage
 
 	if ((result = set_home_settings_calb(yStage, &yHomeSettings, &calibration)) != result_ok)
 		wprintf(L"error setting home settings %ls\n\n", error_string(result));
@@ -322,6 +323,14 @@ int main(int argc, char *argv[])
 
 	msec_sleep(2000);
 
+	if ((result = get_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
+		wprintf(L"error comman get move settings %ls\n", error_string(result));
+
+	xMoveSettings.Speed = 2.000;
+
+	if ((result = set_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
+		wprintf(L"error comman set move settings %ls\n", error_string(result));
+
 	if ((result = command_move_calb(xStage, 30, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
 
@@ -340,6 +349,14 @@ int main(int argc, char *argv[])
 	}
 
 	msec_sleep(2000);
+
+	if ((result = get_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
+		wprintf(L"error comman get move settings %ls\n", error_string(result));
+
+	xMoveSettings.Speed = 15.000;
+
+	if ((result = set_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
+		wprintf(L"error comman set move settings %ls\n", error_string(result));
 
 	if ((result = command_move_calb(xStage, -30, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
@@ -398,6 +415,14 @@ int main(int argc, char *argv[])
 
 	msec_sleep(2000);
 
+	if ((result = get_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
+		wprintf(L"error comman get move settings %ls\n", error_string(result));
+
+	xMoveSettings.Speed = 2.000;
+
+	if ((result = set_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
+		wprintf(L"error comman set move settings %ls\n", error_string(result));
+
 	if ((result = command_move_calb(xStage, 30, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
 
@@ -416,6 +441,14 @@ int main(int argc, char *argv[])
 	}
 
 	msec_sleep(2000);
+
+	if ((result = get_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
+		wprintf(L"error comman get move settings %ls\n", error_string(result));
+
+	xMoveSettings.Speed = 15.000;
+
+	if ((result = set_move_settings_calb(xStage, &xMoveSettings, &calibration)) != result_ok)
+		wprintf(L"error comman set move settings %ls\n", error_string(result));
 
 	if ((result = command_move_calb(xStage, 0, &calibration)) != result_ok)
 		wprintf(L"error command_movr %ls\n", error_string(result));
