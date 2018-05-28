@@ -48,78 +48,78 @@ public:
 
   void init (char *server_hostname)
   {
-	WSADATA wsaData;
-	int result = WSAStartup (MAKEWORD (2, 2), &wsaData);
-	if (result)
-	{
-	  // TODO: do something more useful here with the error code
-	  std::cerr << "Could not initialize windows socket (" << result << ")" << std::endl;
-	  return;
-	}
+    WSADATA wsaData;
+    int result = WSAStartup (MAKEWORD (2, 2), &wsaData);
+    if (result)
+    {
+      // TODO: do something more useful here with the error code
+      std::cerr << "Could not initialize windows socket (" << result << ")" << std::endl;
+      return;
+    }
 
-	struct addrinfo *servers = get_server_addr (server_hostname);
+    struct addrinfo *servers = get_server_addr (server_hostname);
 
-	if (NULL == servers)
-	{
-	  WSACleanup ();
-	  return;
-	}
+    if (NULL == servers)
+    {
+      WSACleanup ();
+      return;
+    }
 
-	connect_to_server (servers);
+    connect_to_server (servers);
 
-	freeaddrinfo (servers);
+    freeaddrinfo (servers);
 
-	if (INVALID_SOCKET == mySocket)
-	{
-	  std::cerr << "Could not connect to server" << std::endl;
-	  WSACleanup ();
-	}
+    if (INVALID_SOCKET == mySocket)
+    {
+      std::cerr << "Could not connect to server" << std::endl;
+      WSACleanup ();
+    }
   }
 
   int read ()
   {
-	char data;
-	int result = recv (mySocket, &data, 1, 0);
-	if (result < 0)
-	{
-	  if (WSAEWOULDBLOCK != WSAGetLastError())
-	  {
-		std::cerr << "Failed to receive data from server " << WSAGetLastError() << std::endl;
-	  }
-	  return -1;
-	}
-	else if (result == 0)
-	{
-	  std::cerr << "Connection to server closed" << std::endl;
-	  return -1;
-	}
-	return (unsigned char) data;
+    char data;
+    int result = recv (mySocket, &data, 1, 0);
+    if (result < 0)
+    {
+      if (WSAEWOULDBLOCK != WSAGetLastError())
+      {
+        std::cerr << "Failed to receive data from server " << WSAGetLastError() << std::endl;
+      }
+      return -1;
+    }
+    else if (result == 0)
+    {
+      std::cerr << "Connection to server closed" << std::endl;
+      return -1;
+    }
+    return (unsigned char) data;
   }
 
   void write (const unsigned char *data, int length)
   {
-	int result = send (mySocket, (const char *) data, length, 0);
-	if (SOCKET_ERROR == result)
-	{
-	  std::cerr << "Send failed with error " << WSAGetLastError () << std::endl;
-	  closesocket (mySocket);
-	  WSACleanup ();
-	}
+    int result = send (mySocket, (const char *) data, length, 0);
+    if (SOCKET_ERROR == result)
+    {
+      std::cerr << "Send failed with error " << WSAGetLastError () << std::endl;
+      closesocket (mySocket);
+      WSACleanup ();
+    }
   }
 
   unsigned long time ()
   {
-	SYSTEMTIME st_now;
-	GetSystemTime (&st_now);
-	unsigned long millis = st_now.wHour * 3600000 +
-						   st_now.wMinute * 60000 + 
-						   st_now.wSecond * 1000 + 
-						   st_now.wMilliseconds;
-	return millis;
+    SYSTEMTIME st_now;
+    GetSystemTime (&st_now);
+    unsigned long millis = st_now.wHour * 3600000 +
+                           st_now.wMinute * 60000 + 
+                           st_now.wSecond * 1000 + 
+                           st_now.wMilliseconds;
+    return millis;
   }
 
 protected:
-		/**
+        /**
 	* Helper to get the addrinfo for the server based on a string hostname.
 	* NB: you can just pass in a const char* and C++ will automatically
 	* create the string instance for you.
@@ -128,70 +128,70 @@ protected:
 	*/
   struct addrinfo *get_server_addr (const string & hostname)
   {
-	int result;
-	struct addrinfo *ai_output = NULL;
-	struct addrinfo ai_input;
+    int result;
+    struct addrinfo *ai_output = NULL;
+    struct addrinfo ai_input;
 
-	// split off the port number if given
-	int c = hostname.find_last_of (':');
-	string host = hostname.substr (0, c);
-	string port = (c < 0) ? DEFAULT_PORT : hostname.substr (c + 1);
+    // split off the port number if given
+    int c = hostname.find_last_of (':');
+    string host = hostname.substr (0, c);
+    string port = (c < 0) ? DEFAULT_PORT : hostname.substr (c + 1);
 
-	ZeroMemory (&ai_input, sizeof (ai_input));
-	ai_input.ai_family = AF_UNSPEC;
-	ai_input.ai_socktype = SOCK_STREAM;
-	ai_input.ai_protocol = IPPROTO_TCP;
+    ZeroMemory (&ai_input, sizeof (ai_input));
+    ai_input.ai_family = AF_UNSPEC;
+    ai_input.ai_socktype = SOCK_STREAM;
+    ai_input.ai_protocol = IPPROTO_TCP;
 
-	// Resolve the server address and port
-	result = getaddrinfo (host.c_str (), port.c_str (), &ai_input, &ai_output);
-	if (result != 0)
-	{
-	  std::cerr << "Could not resolve server address (" << result << ")" << std::endl;
-	  return NULL;
-	}
-	return ai_output;
+    // Resolve the server address and port
+    result = getaddrinfo (host.c_str (), port.c_str (), &ai_input, &ai_output);
+    if (result != 0)
+    {
+      std::cerr << "Could not resolve server address (" << result << ")" << std::endl;
+      return NULL;
+    }
+    return ai_output;
   }
 
-		/**
+        /**
 	* Helper to connect the socket to a given address.
 	* @param server address of the server to connect to, linked list
 	*/
   void connect_to_server (struct addrinfo *servers)
   {
-	int result;
-	for (struct addrinfo * ptr = servers; ptr != NULL; ptr = ptr->ai_next)
-	{
-	  mySocket = socket (ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
-	  if (INVALID_SOCKET == mySocket)
-	  {
-		std::cerr << "Could not great socket " << WSAGetLastError ();
-		return;
-	  }
+    int result;
+    for (struct addrinfo * ptr = servers; ptr != NULL; ptr = ptr->ai_next)
+    {
+      mySocket = socket (ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
+      if (INVALID_SOCKET == mySocket)
+      {
+        std::cerr << "Could not great socket " << WSAGetLastError ();
+        return;
+      }
 
-	  result = connect (mySocket, ptr->ai_addr, (int) ptr->ai_addrlen);
-	  if (SOCKET_ERROR == result)
-	  {
-		closesocket (mySocket);
-		mySocket = INVALID_SOCKET;
-	  }
-	  else
-	  {
-		break;
-	  }
-	}
+      result = connect (mySocket, ptr->ai_addr, (int) ptr->ai_addrlen);
+      if (SOCKET_ERROR == result)
+      {
+        closesocket (mySocket);
+        mySocket = INVALID_SOCKET;
+      }
+      else
+      {
+        break;
+      }
+    }
 
-	// disable nagle's algorithm
-	char value = 1;
-	setsockopt (mySocket, IPPROTO_TCP, TCP_NODELAY, &value, sizeof (value));
-	// disable blocking
-	u_long iMode = 1;
-	result = ioctlsocket (mySocket, FIONBIO, &iMode);
-	if (result)
-	{
-	  std::cerr << "Could not make socket nonblocking " << result << std::endl;
-	  closesocket (mySocket);
-	  mySocket = INVALID_SOCKET;
-	}
+    // disable nagle's algorithm
+    char value = 1;
+    setsockopt (mySocket, IPPROTO_TCP, TCP_NODELAY, &value, sizeof (value));
+    // disable blocking
+    u_long iMode = 1;
+    result = ioctlsocket (mySocket, FIONBIO, &iMode);
+    if (result)
+    {
+      std::cerr << "Could not make socket nonblocking " << result << std::endl;
+      closesocket (mySocket);
+      mySocket = INVALID_SOCKET;
+    }
   }
 
 private:
