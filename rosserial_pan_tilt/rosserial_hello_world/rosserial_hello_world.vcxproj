@@ -170,6 +170,7 @@
   <ItemGroup>
     <ClInclude Include="..\ros_lib\ros.h" />
     <ClInclude Include="..\ros_lib\WindowsSocket.h" />
+    <ClInclude Include="PanTilt.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -178,6 +179,7 @@
     <ClCompile Include="..\ros_lib\time.cpp" />
     <ClCompile Include="..\ros_lib\WindowsSocket.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PanTilt.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
